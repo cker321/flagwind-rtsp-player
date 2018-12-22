@@ -1,7 +1,7 @@
 /*!
  * Authors:
  *      jason <jasonsoop@gmail.com>
- * 
+ *  
  * Copyright (C) 2010-present Flagwind Inc. All rights reserved. 
  */
 
@@ -17,8 +17,9 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const globalShortcut = electron.globalShortcut;
 
+const ipcMain = require('electron').ipcMain
 // Electron 1.4.x 文档
-// https://github.com/electron/electron/tree/1-4-x/docs
+// https://github.com/electron/electron/tree/1-4-x/docs 
 
 export default class Workbench extends WorkbenchBase
 {
@@ -84,6 +85,32 @@ export default class Workbench extends WorkbenchBase
                 this.createMainWindow();
             }
         });
+
+
+        //远程页面中调用触发本地
+        ipcMain.on('playvideo',function(event,param){
+             console.log('playvideo',param);
+
+             const modalPath = 'http://localhost:9080/?rtsp_path='+param
+              //let win = new BrowserWindow({ width: 705, height: 250,resizable:false,autoHideMenuBar:true,type: 'desktop', icon: './ioc/download2.png' })
+              let upwin = new BrowserWindow({ 
+                width: 705, 
+                height: 650,
+                //autoHideMenuBar:true,
+                type: 'desktop', 
+                //icon: __dirname+'\\ioc\\upgrate2.png',
+                //resizable:false,
+                maximizable:false,
+                 })
+              //win.setApplicationMenu(null);
+              upwin.on('closed', function() { 
+                     upwin = null
+               })
+              upwin.loadURL(modalPath)
+              upwin.show()
+
+        })
+
     }
 
     /**

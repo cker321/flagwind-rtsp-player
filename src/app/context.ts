@@ -46,8 +46,9 @@ export default class ApplicationContext extends ApplicationContextBase
         super("wayto-toilets-client");
         
         // 设置主窗口地址
-        this._mainUrl = process.env.NODE_ENV === "development" ? "http://localhost:9080" : `file://${__dirname}/index.html`;
-        
+        //this._mainUrl = process.env.NODE_ENV === "development" ? "http://localhost:9080" : `file://${__dirname}/index.html`;
+        this._mainUrl = `http://localhost:85/index.html`;
+        console.log('root:',__dirname,this._mainUrl);
         /**
          * Set `__static` path to static files in production
          * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html

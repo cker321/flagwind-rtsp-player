@@ -1,21 +1,8 @@
 <template>
     <div class="v-dashboard">
-        <i-row>
-            <i-col span="12">
-                <u-player src="rtsp://admin:admin123@10.10.10.127:554/mpeg4/ch1/main/av_stream"></u-player>
-            </i-col>
-            <i-col span="12">
-                <u-player src="rtsp://admin:admin123@10.10.10.127:554/mpeg4/ch1/main/av_stream"></u-player>
-            </i-col>
-        </i-row>
-        <i-row>
-            <i-col span="12">
-                <u-player src="rtsp://admin:admin123@10.10.10.127:554/mpeg4/ch1/main/av_stream"></u-player>
-            </i-col>
-            <i-col span="12">
-                <u-player src="rtsp://admin:admin123@10.10.10.127:554/mpeg4/ch1/main/av_stream"></u-player>
-            </i-col>
-        </i-row>
+       
+         <u-player :src="video_url"></u-player>
+     
     </div>
 </template>
 
@@ -42,6 +29,37 @@ import Player from "components/player";
 })
 export default class Dashboard extends View
 {
-    
+   //  console.log(this.$route.query.id)
+    // id = this.$route.query.id;
+     name = 'ranmufei'
+     video_url = ''
+     hello(){
+        alert('hi feifei');
+     }
+
+     created(){
+          //alert(this.$route.query);
+         
+          this.video_url=this.getQueryString('rtsp_path')
+     }
+
+    mounted () {
+     // alert('hi mounted');
+    }
+    // 获取URL 参数
+    getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        var q = window.location.pathname.substr(1).match(reg_rewrite);
+        if(r != null){
+            return unescape(r[2]);
+        }else if(q != null){
+            return unescape(q[2]);
+        }else{
+            return null;
+        }
+    }
+
 }
 </script>
